@@ -1,0 +1,964 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /api/users/{userId}:
+    get:
+      tags:
+      - user-controller
+      operationId: getUserById
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+    put:
+      tags:
+      - user-controller
+      operationId: updateUserById
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+    delete:
+      tags:
+      - user-controller
+      operationId: deleteUserById
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/rehearsals/{rehearsalId}/users/{userId}:
+    put:
+      tags:
+      - rehearsal-controller
+      operationId: finishRehearsal
+      parameters:
+      - name: rehearsalId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RehearsalDTO'
+  /api/bands/{bandId}/users/{userId}:
+    put:
+      tags:
+      - band-controller
+      operationId: updateBandById
+      parameters:
+      - name: bandId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BandDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BandDTO'
+  /api/bands/{bandId}/users/{userId}/{userToAddId}:
+    put:
+      tags:
+      - band-controller
+      operationId: addUserToBand
+      parameters:
+      - name: bandId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: userToAddId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BandDTO'
+  /api/bands/{bandId}/users/{userId}/member/{userToChangeRoleId}:
+    put:
+      tags:
+      - band-controller
+      operationId: changeUserToMemberInBand
+      parameters:
+      - name: bandId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: userToChangeRoleId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BandDTO'
+  /api/bands/{bandId}/users/{userId}/admin/{userToChangeRoleId}:
+    put:
+      tags:
+      - band-controller
+      operationId: makeUserAdminInBand
+      parameters:
+      - name: bandId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: userToChangeRoleId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BandDTO'
+  /api/users:
+    get:
+      tags:
+      - user-controller
+      operationId: getUsers
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+    post:
+      tags:
+      - user-controller
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+  /api/rehearsals/users/{userId}/bands/{bandId}:
+    post:
+      tags:
+      - rehearsal-controller
+      operationId: createRehearsal
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: bandId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RehearsalDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RehearsalDTO'
+  /api/posts/users/{userId}/bands/{bandId}:
+    post:
+      tags:
+      - post-controller
+      operationId: createPost
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: bandId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PostDTO'
+  /api/messages/users/{fromUserId}/{toUserId}:
+    post:
+      tags:
+      - message-controller
+      operationId: sendMessage
+      parameters:
+      - name: fromUserId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: toUserId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MessageDTO'
+  /api/bands/users/{userId}:
+    post:
+      tags:
+      - band-controller
+      operationId: createBand
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BandDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BandDTO'
+  /api/users/filter:
+    get:
+      tags:
+      - user-controller
+      operationId: getFilteredUsers
+      parameters:
+      - name: userId
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: firstName
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: lastName
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: email
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: birthday
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: pastExperience
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stageName
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+  /api/rehearsals:
+    get:
+      tags:
+      - rehearsal-controller
+      operationId: getRehearsals
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RehearsalDTO'
+  /api/rehearsals/{rehearsalId}:
+    get:
+      tags:
+      - rehearsal-controller
+      operationId: getRehearsalById
+      parameters:
+      - name: rehearsalId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RehearsalDTO'
+    delete:
+      tags:
+      - rehearsal-controller
+      operationId: deleteRehearsalById
+      parameters:
+      - name: rehearsalId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/posts:
+    get:
+      tags:
+      - post-controller
+      operationId: getAllPosts
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PostDTO'
+  /api/posts/{postId}:
+    get:
+      tags:
+      - post-controller
+      operationId: getPostById
+      parameters:
+      - name: postId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PostDTO'
+  /api/messages:
+    get:
+      tags:
+      - message-controller
+      operationId: getMessages
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MessageDTO'
+  /api/messages/{messageId}:
+    get:
+      tags:
+      - message-controller
+      operationId: getMessageById
+      parameters:
+      - name: messageId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MessageDTO'
+    delete:
+      tags:
+      - message-controller
+      operationId: deleteMessageById
+      parameters:
+      - name: messageId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/messages/users/{fromUser}/{toUser}:
+    get:
+      tags:
+      - message-controller
+      operationId: getConversationBetweenUsers
+      parameters:
+      - name: fromUser
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: toUser
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MessageDTO'
+  /api/bands:
+    get:
+      tags:
+      - band-controller
+      operationId: getAllBands
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BandDTO'
+  /api/bands/{bandId}:
+    get:
+      tags:
+      - band-controller
+      operationId: getBandById
+      parameters:
+      - name: bandId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BandDTO'
+    delete:
+      tags:
+      - band-controller
+      operationId: deleteBandById
+      parameters:
+      - name: bandId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/posts/{postId}/users/{userId}/bands/{bandId}:
+    delete:
+      tags:
+      - post-controller
+      operationId: deletePostById
+      parameters:
+      - name: postId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: bandId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+components:
+  schemas:
+    Band:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        bandName:
+          type: string
+        bandDescription:
+          type: string
+        postList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+        rehearsalList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rehearsal'
+        userList:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    LocalTime:
+      type: object
+      properties:
+        hour:
+          type: integer
+          format: int32
+        minute:
+          type: integer
+          format: int32
+        second:
+          type: integer
+          format: int32
+        nano:
+          type: integer
+          format: int32
+    Message:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        content:
+          type: string
+        messageDate:
+          type: string
+          format: date
+        messageTime:
+          $ref: '#/components/schemas/LocalTime'
+        toUser:
+          $ref: '#/components/schemas/User'
+        fromUser:
+          $ref: '#/components/schemas/User'
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        postTitle:
+          type: string
+        postDescription:
+          type: string
+        postGenre:
+          type: string
+        postRecordingTitle:
+          type: string
+        useOpenAIForDescription:
+          type: boolean
+        postBand:
+          $ref: '#/components/schemas/Band'
+    Rehearsal:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        rehearsalState:
+          type: string
+          enum:
+          - DUE
+          - DONE
+        rehearsalDate:
+          type: string
+          format: date
+        rehearsalTime:
+          $ref: '#/components/schemas/LocalTime'
+        rehearsalDurationHours:
+          type: integer
+          format: int32
+        rehearsalAvailability:
+          type: string
+          enum:
+          - PUBLIC
+          - PRIVATE
+        rehearsalBand:
+          $ref: '#/components/schemas/Band'
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+        lastName:
+          type: string
+        description:
+          type: string
+        birthday:
+          type: string
+          format: date
+        email:
+          type: string
+        stageName:
+          type: string
+        pastExperience:
+          type: object
+          additionalProperties:
+            type: string
+        bandRole:
+          type: object
+          additionalProperties:
+            type: string
+        bandList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Band'
+        toUserList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        fromUserList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+    UserDTO:
+      required:
+      - birthday
+      - description
+      - email
+      - firstName
+      - lastName
+      - stageName
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        firstName:
+          maxLength: 30
+          minLength: 3
+          type: string
+        lastName:
+          maxLength: 30
+          minLength: 3
+          type: string
+        description:
+          maxLength: 200
+          minLength: 3
+          type: string
+        birthday:
+          type: string
+        email:
+          type: string
+        stageName:
+          maxLength: 30
+          minLength: 3
+          type: string
+        pastExperience:
+          type: object
+          additionalProperties:
+            type: string
+        bandRole:
+          type: object
+          additionalProperties:
+            type: string
+        bandList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Band'
+        toUserList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        fromUserList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+    RehearsalDTO:
+      required:
+      - rehearsalAvailability
+      - rehearsalDate
+      - rehearsalDurationHours
+      - rehearsalTime
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        state:
+          type: string
+          enum:
+          - DUE
+          - DONE
+        rehearsalDate:
+          type: string
+        rehearsalTime:
+          type: string
+        rehearsalDurationHours:
+          maximum: 9
+          minimum: 1
+          type: integer
+          format: int32
+        rehearsalAvailability:
+          type: string
+        rehearsalBand:
+          $ref: '#/components/schemas/Band'
+    BandDTO:
+      required:
+      - bandDescription
+      - bandName
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        bandName:
+          maxLength: 30
+          minLength: 3
+          type: string
+        bandDescription:
+          maxLength: 200
+          minLength: 3
+          type: string
+        postList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+        rehearsalList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rehearsal'
+        userList:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    PostDTO:
+      required:
+      - postGenre
+      - postRecordingTitle
+      - postTitle
+      - useOpenAIForDescription
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        postTitle:
+          maxLength: 30
+          minLength: 3
+          type: string
+        postDescription:
+          maxLength: 1000
+          minLength: 0
+          type: string
+        postGenre:
+          maxLength: 30
+          minLength: 3
+          type: string
+        postRecordingTitle:
+          maxLength: 30
+          minLength: 3
+          type: string
+        useOpenAIForDescription:
+          type: boolean
+        postBand:
+          $ref: '#/components/schemas/Band'
+    MessageDTO:
+      required:
+      - content
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        content:
+          maxLength: 1000
+          minLength: 3
+          type: string
+        messageDate:
+          type: string
+        messageTime:
+          type: string
+        fromUser:
+          $ref: '#/components/schemas/User'
+        toUser:
+          $ref: '#/components/schemas/User'
