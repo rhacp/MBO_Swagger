@@ -220,6 +220,8 @@ paths:
     get:
       tags:
       - user-controller
+      description: Returns all existing users.
+      summary: Get all users.
       operationId: getUsers
       responses:
         "200":
@@ -233,6 +235,8 @@ paths:
     post:
       tags:
       - user-controller
+      description: Creates a user.
+      summary: Create user.
       operationId: createUser
       requestBody:
         content:
